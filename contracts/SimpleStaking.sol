@@ -4,12 +4,8 @@ contract SimpleStaking {
     mapping(address => uint256) public timeStaked;
 
     function stake() public payable {
-
         require(msg.value > 0, "Must stake some ETH");
-
-
         balances[msg.sender] += msg.value;
-
         timeStaked[msg.sender] = block.timestamp;
     }
 

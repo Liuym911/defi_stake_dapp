@@ -5,9 +5,9 @@ function App() {
   const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum));
   const [signer, setSigner] = useState(null);
 
-  const ABI = [ /*...*/ ];
+  const ABI = [{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stake","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"timeStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 
-  const contractAddress = '0xYourContractAddress';
+  const contractAddress = '0x90d524dC6Cb8089daa99F18788529d220126d23D';
 
   const contract = signer ? new ethers.Contract(contractAddress, ABI, signer) : null;
 
