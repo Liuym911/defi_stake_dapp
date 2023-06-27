@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { ethers } from 'ethers';
 
 function App() {
+  const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum));
+  const [signer, setSigner] = useState(null);
+
+  const ABI = [ /*...*/ ];
+
+  const contractAddress = '0xYourContractAddress';
+
+  const contract = signer ? new ethers.Contract(contractAddress, ABI, signer) : null;
+
+  const connectWallet = async () => {
+    await window.ethereum.enable();
+    setSigner(provider.getSigner());
+  }
+
+  const stake = async (amount) => {
+    if (contract) {
+      const weiAmount = ethers.utils.parseEther(amount.toString());
+      await contract.stake({ value: weiAmount });
+    }
+  };
+
+  const unstake = async () => {
+    if (contract) {
+      await contract.unstake();
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        {!signer ? (
+            <button onClick={connectWallet}>Connect Wallet</button>
+        ) : (
+            <>
+              <button onClick={() => stake(1)}>Stake 1 ETH</button>
+              <button onClick={unstake}>Unstake</button>
+            </>
+        )}
+      </div>
   );
 }
 
